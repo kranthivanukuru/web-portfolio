@@ -10,7 +10,7 @@ function GlobePoints() {
   });
 
   return (
-    <Points positions={sphere} stride={3} frustumCulled>
+    <Points positions={new Float32Array(sphere)} stride={3} frustumCulled>
       <PointMaterial
         transparent
         color="#c084fc"
