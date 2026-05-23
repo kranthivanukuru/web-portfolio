@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Reveal from "@/components/Reveal";
+import Globe from "@/components/Globe";
+import Tilt from "react-parallax-tilt";
+import Loader from "@/components/Loader";
 import {
   FaPython,
   FaAws,
@@ -9,6 +12,12 @@ import {
   FaGithub,
   FaLinkedin,
   FaDatabase,
+  FaBrain,
+  FaChartLine,
+  FaServer,
+  FaCloud,
+  FaCode,
+  FaChartBar,
 } from "react-icons/fa";
 
 import {
@@ -20,8 +29,77 @@ import {
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const sections = ["home", "about", "skills", "projects", "experience", "contact"];
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 160;
+      const bottomReached =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 50;
+
+      if (bottomReached) {
+        setActiveSection("contact");
+        return;
+      }
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (!element) continue;
+
+        const offsetTop = element.offsetTop;
+        const offsetHeight = element.offsetHeight;
+
+        if (
+          scrollPosition >= offsetTop &&
+          scrollPosition < offsetTop + offsetHeight
+        ) {
+          setActiveSection(section);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1800);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <main className="min-h-screen bg-[#050816] text-white overflow-hidden">
+      {loading && <Loader />}
+      <div className="particle-bg" />
+
+      <div
+        className="pointer-events-none fixed z-50 hidden h-8 w-8 rounded-full border border-purple-400/40 bg-purple-500/10 blur-sm md:block"
+        style={{
+          left: mousePosition.x - 16,
+          top: mousePosition.y - 16,
+        }}
+      /> 
       <nav className="fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-[#050816]/80 backdrop-blur-xl">
         <div className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 py-5 flex items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-bold tracking-wide">
@@ -29,17 +107,28 @@ export default function Home() {
           </h1>
 
           <div className="hidden md:flex items-center gap-8 text-sm text-zinc-300">
-            <a className="text-purple-400" href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#experience">Experience</a>
-            <a href="#contact">Contact</a>
+            {["home", "about", "skills", "projects", "experience", "contact"].map((item) => (
+              <a
+                key={item}
+                href={`#${item}`}
+                className={`capitalize transition-all duration-300 ${
+                  activeSection === item
+                    ? "text-purple-400"
+                    : "hover:text-purple-300"
+                }`}
+              >
+                {item}
+              </a>
+            ))}
           </div>
 
-          <button className="hidden sm:block bg-purple-600 hover:bg-purple-500 transition-all duration-300 px-5 py-2 rounded-xl text-sm font-medium">
+          <a
+            href="/resume/Kranthi_Vanukuru_Resume.pdf"
+            download
+            className="hidden sm:block bg-purple-600 hover:bg-purple-500 transition-all duration-300 px-5 py-2 rounded-xl text-sm font-medium"
+          >
             Download CV
-          </button>
+          </a>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -59,9 +148,13 @@ export default function Home() {
               <a onClick={() => setIsOpen(false)} href="#experience">Experience</a>
               <a onClick={() => setIsOpen(false)} href="#contact">Contact</a>
 
-              <button className="mt-3 bg-purple-600 hover:bg-purple-500 px-5 py-3 rounded-xl text-sm font-medium">
+              <a
+                href="/resume/Kranthi_Vanukuru_Resume.pdf"
+                download
+                className="mt-3 bg-purple-600 hover:bg-purple-500 px-5 py-3 rounded-xl text-sm font-medium text-center"
+              >
                 Download CV
-              </button>
+              </a>
             </div>
           </div>
         )}
@@ -201,44 +294,9 @@ export default function Home() {
         </div>
 
         <div className="relative flex items-center justify-center">
-
-          {/* Outer Glow */}
           <div className="absolute w-[500px] h-[500px] rounded-full bg-purple-700/20 blur-[140px]" />
 
-          {/* Rotating Container */}
-          <div className="relative w-[360px] h-[360px] animate-spin-slow">
-
-            {/* Main Globe */}
-            <div className="absolute inset-0 rounded-full border border-purple-500/30 bg-purple-900/10 backdrop-blur-xl overflow-hidden">
-
-              {/* Latitude Rings */}
-              <div className="absolute inset-6 rounded-full border border-purple-400/20"></div>
-              <div className="absolute inset-14 rounded-full border border-purple-400/15"></div>
-              <div className="absolute inset-24 rounded-full border border-purple-400/10"></div>
-
-              {/* Vertical */}
-              <div className="absolute left-1/2 top-0 h-full w-px bg-purple-400/20"></div>
-
-              {/* Horizontal */}
-              <div className="absolute top-1/2 left-0 w-full h-px bg-purple-400/20"></div>
-
-              {/* Diagonal */}
-              <div className="absolute left-1/2 top-0 h-full w-px bg-purple-400/10 rotate-45"></div>
-
-              {/* Glow Dots */}
-              <div className="absolute top-10 left-1/2 w-3 h-3 bg-purple-300 rounded-full shadow-[0_0_25px_#c084fc]" />
-
-              <div className="absolute bottom-14 right-12 w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_20px_#a855f7]" />
-
-              <div className="absolute top-24 left-10 w-2 h-2 bg-purple-500 rounded-full shadow-[0_0_20px_#9333ea]" />
-            </div>
-
-            {/* Orbit Ring 1 */}
-            <div className="absolute inset-[-20px] rounded-full border border-purple-500/10"></div>
-
-            {/* Orbit Ring 2 */}
-            <div className="absolute inset-[-40px] rounded-full border border-purple-500/5"></div>
-          </div>
+          <Globe />
         </div>
       </section>
       </Reveal>
@@ -274,12 +332,12 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-4xl">🗄️</div>
+                <FaDatabase className="text-4xl text-cyan-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">SQL</p>
               </div>
 
               <div>
-                <div className="text-4xl">📊</div>
+                <FaChartBar className="text-4xl text-pink-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">R</p>
               </div>
             </div>
@@ -293,7 +351,7 @@ export default function Home() {
 
             <div className="grid grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-4xl">📈</div>
+                <FaChartLine className="text-4xl text-green-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Pandas</p>
               </div>
 
@@ -303,7 +361,7 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-4xl">🤖</div>
+                <FaBrain className="text-4xl text-purple-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Scikit</p>
               </div>
 
@@ -318,7 +376,7 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-4xl">📓</div>
+                <FaCode className="text-4xl text-yellow-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Jupyter</p>
               </div>
             </div>
@@ -342,22 +400,22 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-4xl">🌊</div>
+                <FaServer className="text-4xl text-blue-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Airflow</p>
               </div>
 
               <div>
-                <div className="text-4xl">🧊</div>
+                <FaDatabase className="text-4xl text-cyan-300 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Iceberg</p>
               </div>
 
               <div>
-                <div className="text-4xl">🛢️</div>
+                <FaDatabase className="text-4xl text-orange-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Hive</p>
               </div>
 
               <div>
-                <div className="text-4xl">🔄</div>
+                <FaCode className="text-4xl text-purple-300 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">ETL</p>
               </div>
             </div>
@@ -376,7 +434,7 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-4xl">🧠</div>
+                <FaBrain className="text-4xl text-pink-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">SageMaker</p>
               </div>
 
@@ -386,17 +444,17 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-4xl">⚙️</div>
+                <FaCode className="text-4xl text-zinc-300 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Lambda</p>
               </div>
 
               <div>
-                <div className="text-4xl">📈</div>
+                <FaChartLine className="text-4xl text-green-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">CloudWatch</p>
               </div>
 
               <div>
-                <div className="text-4xl">🚀</div>
+                <FaCloud className="text-4xl text-purple-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Step Functions</p>
               </div>
             </div>
@@ -446,86 +504,96 @@ export default function Home() {
 
       {/* Featured Projects Section */}
       <Reveal>
-      <section
-        id="projects"
-        className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
-      >
-        <div className="flex items-end justify-between mb-14">
-          <div>
-            <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
-              Featured Projects
-            </p>
-            <h2 className="text-4xl md:text-6xl font-bold">
-              Selected <span className="text-purple-500">Work</span>
-            </h2>
+        <section
+          id="projects"
+          className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+        >
+          <div className="flex items-end justify-between mb-14">
+            <div>
+              <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
+                Featured Projects
+              </p>
+              <h2 className="text-4xl md:text-6xl font-bold">
+                Selected <span className="text-purple-500">Work</span>
+              </h2>
+            </div>
+
+            <a href="#" className="hidden md:block text-purple-400 hover:text-purple-300">
+              View all projects →
+            </a>
           </div>
 
-          <a href="#" className="hidden md:block text-purple-400 hover:text-purple-300">
-            View all projects →
-          </a>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {[
+              {
+                title: "FEPDO Reconciliation Automation",
+                tag: "Data Engineering",
+                desc: "Automated FEP data reconciliation using PySpark, Glue, and Athena. Reduced processing time and improved data accuracy.",
+                tech: ["PySpark", "Glue", "Athena", "S3"],
+              },
+              {
+                title: "Iceberg Optimization Pipeline",
+                tag: "Data Lake",
+                desc: "Optimized Iceberg tables with partitioning and compaction strategies for faster analytics queries.",
+                tech: ["Iceberg", "AWS Glue", "Athena"],
+              },
+              {
+                title: "Step Function Monitoring Dashboard",
+                tag: "Cloud / Observability",
+                desc: "Built monitoring dashboards for AWS Step Functions using CloudWatch, Athena, and reporting tables.",
+                tech: ["CloudWatch", "Athena", "AWS"],
+              },
+              {
+                title: "Lightbeam Data Pipelines",
+                tag: "Healthcare Analytics",
+                desc: "Developed scalable eligibility and patient attribute pipelines for healthcare analytics and reporting.",
+                tech: ["AWS Glue", "Kafka", "Redshift"],
+              },
+            ].map((project) => (
+              <Tilt
+                key={project.title}
+                tiltMaxAngleX={8}
+                tiltMaxAngleY={8}
+                perspective={1200}
+                transitionSpeed={1200}
+                scale={1.02}
+                gyroscope={true}
+                className="group rounded-3xl"
+              >
+                <div className="h-full rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2">
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-600/20 text-2xl">
+                    ⚡
+                  </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          {[
-            {
-              title: "FEPDO Reconciliation Automation",
-              tag: "Data Engineering",
-              desc: "Automated FEP data reconciliation using PySpark, Glue, and Athena. Reduced processing time and improved data accuracy.",
-              tech: ["PySpark", "Glue", "Athena", "S3"],
-            },
-            {
-              title: "Iceberg Optimization Pipeline",
-              tag: "Data Lake",
-              desc: "Optimized Iceberg tables with partitioning and compaction strategies for faster analytics queries.",
-              tech: ["Iceberg", "AWS Glue", "Athena"],
-            },
-            {
-              title: "Step Function Monitoring Dashboard",
-              tag: "Cloud / Observability",
-              desc: "Built monitoring dashboards for AWS Step Functions using CloudWatch, Athena, and reporting tables.",
-              tech: ["CloudWatch", "Athena", "AWS"],
-            },
-            {
-              title: "Lightbeam Data Pipelines",
-              tag: "Healthcare Analytics",
-              desc: "Developed scalable eligibility and patient attribute pipelines for healthcare analytics and reporting.",
-              tech: ["AWS Glue", "Kafka", "Redshift"],
-            },
-          ].map((project) => (
-            <div
-              key={project.title}
-              className="group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2"
-            >
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-600/20 text-2xl">
-                ⚡
-              </div>
-
-              <span className="rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
-                {project.tag}
-              </span>
-
-              <h3 className="mt-5 text-2xl font-bold">{project.title}</h3>
-
-              <p className="mt-4 text-sm leading-7 text-zinc-400">{project.desc}</p>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {project.tech.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300"
-                  >
-                    {item}
+                  <span className="rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+                    {project.tag}
                   </span>
-                ))}
-              </div>
 
-              <button className="mt-8 text-purple-400 group-hover:text-purple-300">
-                View Case Study →
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
+                  <h3 className="mt-5 text-2xl font-bold">{project.title}</h3>
+
+                  <p className="mt-4 text-sm leading-7 text-zinc-400">
+                    {project.desc}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {project.tech.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+
+                  <button className="mt-8 text-purple-400 group-hover:text-purple-300">
+                    View Case Study →
+                  </button>
+                </div>
+              </Tilt>
+            ))}
+          </div>
+        </section>
       </Reveal>
 
       {/* Experience Timeline */}
@@ -813,14 +881,18 @@ export default function Home() {
               </a>
 
               <a
-                href="#"
+                href="https://www.linkedin.com/in/kranthivanukuru/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="border border-purple-500/50 hover:border-purple-400 transition-all duration-300 px-7 py-3 rounded-xl text-purple-300 font-medium"
               >
                 LinkedIn
               </a>
 
               <a
-                href="#"
+                href="https://github.com/kranthivanukuru"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="border border-purple-500/50 hover:border-purple-400 transition-all duration-300 px-7 py-3 rounded-xl text-purple-300 font-medium"
               >
                 GitHub
@@ -830,14 +902,18 @@ export default function Home() {
             {/* Social Icons */}
             <div className="mt-10 flex justify-center gap-8 text-3xl">
               <a
-                href="#"
+                href="https://github.com/kranthivanukuru"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-purple-400 transition-all duration-300 hover:scale-110"
               >
                 <FaGithub />
               </a>
 
               <a
-                href="#"
+                href="https://www.linkedin.com/in/kranthivanukuru/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-purple-400 transition-all duration-300 hover:scale-110"
               >
                 <FaLinkedin />
