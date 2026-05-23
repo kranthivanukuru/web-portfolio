@@ -1,10 +1,18 @@
 @import "tailwindcss";
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 100px;
+}
+
 :root {
   --background: #050816;
   --foreground: #ffffff;
 }
-
 body {
   background:
     radial-gradient(circle at top, rgba(124, 58, 237, 0.18), transparent 30%),
@@ -30,3 +38,42 @@ body {
   animation: spinSlow 18s linear infinite;
 }
 
+.particle-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle-bg::before,
+.particle-bg::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 9999px;
+  background: rgba(168, 85, 247, 0.12);
+  filter: blur(120px);
+  animation: floatGlow 14s ease-in-out infinite alternate;
+}
+
+.particle-bg::before {
+  top: 10%;
+  left: 8%;
+}
+
+.particle-bg::after {
+  bottom: 10%;
+  right: 8%;
+  animation-delay: 4s;
+}
+
+@keyframes floatGlow {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(-60px) scale(1.15);
+  }
+}
