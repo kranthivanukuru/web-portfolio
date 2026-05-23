@@ -1,4 +1,25 @@
+"use client";
+
+import { useState } from "react";
+import Reveal from "@/components/Reveal";
+import {
+  FaPython,
+  FaAws,
+  FaReact,
+  FaGithub,
+  FaLinkedin,
+  FaDatabase,
+} from "react-icons/fa";
+
+import {
+  SiPytorch,
+  SiTensorflow,
+  SiApachespark,
+  SiApachekafka,
+} from "react-icons/si";
+
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <main className="min-h-screen bg-[#050816] text-white overflow-hidden">
       <nav className="fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-[#050816]/80 backdrop-blur-xl">
@@ -8,21 +29,45 @@ export default function Home() {
           </h1>
 
           <div className="hidden md:flex items-center gap-8 text-sm text-zinc-300">
-            <a className="text-purple-400" href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Skills</a>
-            <a href="#">Projects</a>
-            <a href="#">Experience</a>
-            <a href="#">Contact</a>
+            <a className="text-purple-400" href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
+            <a href="#contact">Contact</a>
           </div>
 
           <button className="hidden sm:block bg-purple-600 hover:bg-purple-500 transition-all duration-300 px-5 py-2 rounded-xl text-sm font-medium">
             Download CV
           </button>
+
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden text-3xl text-white"
+          >
+            ☰
+          </button>
         </div>
+
+        {isOpen && (
+          <div className="md:hidden border-t border-white/10 bg-[#050816]/95 backdrop-blur-xl px-6 py-6">
+            <div className="flex flex-col gap-5 text-zinc-300">
+              <a onClick={() => setIsOpen(false)} href="#home">Home</a>
+              <a onClick={() => setIsOpen(false)} href="#about">About</a>
+              <a onClick={() => setIsOpen(false)} href="#skills">Skills</a>
+              <a onClick={() => setIsOpen(false)} href="#projects">Projects</a>
+              <a onClick={() => setIsOpen(false)} href="#experience">Experience</a>
+              <a onClick={() => setIsOpen(false)} href="#contact">Contact</a>
+
+              <button className="mt-3 bg-purple-600 hover:bg-purple-500 px-5 py-3 rounded-xl text-sm font-medium">
+                Download CV
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
-      <section className="relative w-full max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 pt-40 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[90vh]">
+      <section id="home" className="relative w-full max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 pt-40 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[90vh]">
         <div className="z-10 text-center lg:text-left">
           <p className="text-purple-400 text-lg md:text-xl mb-4">
             Hello, I&apos;m
@@ -98,6 +143,7 @@ export default function Home() {
         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-purple-500 to-transparent animate-pulse" />
       </div>
 
+      <Reveal>
       <section id="about" className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28 grid grid-cols-1 lg:grid-cols-2 gap-28 items-center">
         <div>
           <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
@@ -117,7 +163,7 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4 text-sm text-zinc-400">
-            <span>📍 Chicago, IL</span>
+            <span>📍 Columbia, SC</span>
             <span>💼 Data Scientist</span>
             <span>☁️ Cloud & ML</span>
             <span>⚙️ Data Engineering</span>
@@ -125,14 +171,14 @@ export default function Home() {
 
           <div className="mt-10 grid grid-cols-2 gap-4 max-w-xl">
             <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-5">
-              <h3 className="text-3xl font-bold text-purple-400">4+</h3>
+              <h3 className="text-3xl font-bold text-purple-400">2+</h3>
               <p className="mt-2 text-zinc-400 text-sm">
                 Years Experience
               </p>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-5">
-              <h3 className="text-3xl font-bold text-purple-400">AWS</h3>
+              <h3 className="text-3xl font-bold text-purple-400">AWS / GCP</h3>
               <p className="mt-2 text-zinc-400 text-sm">
                 Cloud & ML Engineering
               </p>
@@ -195,8 +241,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Tech Stack Section */}
+      <Reveal>
       <section
         id="skills"
         className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
@@ -221,7 +269,7 @@ export default function Home() {
 
             <div className="grid grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-4xl">🐍</div>
+                <FaPython className="text-4xl text-purple-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Python</p>
               </div>
 
@@ -250,7 +298,7 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-4xl">🧠</div>
+                <SiTensorflow className="text-4xl text-orange-500 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">TensorFlow</p>
               </div>
 
@@ -260,7 +308,7 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-4xl">🔥</div>
+                <SiPytorch className="text-4xl text-red-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">PyTorch</p>
               </div>
 
@@ -284,12 +332,12 @@ export default function Home() {
 
             <div className="grid grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-4xl">⚡</div>
+                <SiApachespark className="text-4xl text-orange-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">PySpark</p>
               </div>
 
               <div>
-                <div className="text-4xl">🔥</div>
+                <SiApachekafka className="text-4xl text-white mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Kafka</p>
               </div>
 
@@ -323,7 +371,7 @@ export default function Home() {
 
             <div className="grid grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-4xl">☁️</div>
+                <FaAws className="text-4xl text-orange-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">S3</p>
               </div>
 
@@ -362,12 +410,12 @@ export default function Home() {
 
             <div className="grid grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-4xl">📉</div>
+                <FaReact className="text-4xl text-blue-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Tableau</p>
               </div>
 
               <div>
-                <div className="text-4xl">📊</div>
+                <FaDatabase className="text-4xl text-yellow-400 mx-auto" />
                 <p className="mt-2 text-sm text-zinc-400">Power BI</p>
               </div>
 
@@ -394,8 +442,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Featured Projects Section */}
+      <Reveal>
       <section
         id="projects"
         className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
@@ -476,6 +526,332 @@ export default function Home() {
           ))}
         </div>
       </section>
+      </Reveal>
+
+      {/* Experience Timeline */}
+      <Reveal>
+      <section
+        id="experience"
+        className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+      >
+        <div className="mb-16">
+          <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
+            Professional Experience
+          </p>
+
+          <h2 className="text-4xl md:text-6xl font-bold">
+            Career <span className="text-purple-500">Journey</span>
+          </h2>
+        </div>
+
+        <div className="relative border-l border-purple-500/20 ml-4 md:ml-8 space-y-16">
+
+          {/* DRDO */}
+          <div className="relative pl-10">
+            <div className="absolute -left-[11px] top-2 w-5 h-5 rounded-full bg-purple-500 shadow-[0_0_25px_#a855f7]" />
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <h3 className="text-2xl font-bold">
+                    DRDO
+                  </h3>
+
+                  <p className="text-purple-400 mt-2">
+                    Software Engineer Intern
+                  </p>
+                </div>
+
+                <span className="text-sm text-zinc-400">
+                  2021
+                </span>
+              </div>
+
+              <p className="mt-6 text-zinc-400 leading-8">
+                Worked on software development and automation initiatives,
+                contributing to research-oriented engineering workflows and
+                backend system enhancements.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  Java
+                </span>
+
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  Backend
+                </span>
+
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  Automation
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* NECA */}
+          <div className="relative pl-10">
+            <div className="absolute -left-[11px] top-2 w-5 h-5 rounded-full bg-purple-500 shadow-[0_0_25px_#a855f7]" />
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <h3 className="text-2xl font-bold">
+                    National Exchange Carrier Association
+                  </h3>
+
+                  <p className="text-purple-400 mt-2">
+                    Data Engineer
+                  </p>
+                </div>
+
+                <span className="text-sm text-zinc-400">
+                  2022 - 2023
+                </span>
+              </div>
+
+              <p className="mt-6 text-zinc-400 leading-8">
+                Built scalable ETL pipelines, optimized data workflows,
+                and supported cloud-based analytics initiatives using
+                big data technologies and AWS services.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  PySpark
+                </span>
+
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  AWS
+                </span>
+
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  ETL
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* BCBS */}
+          <div className="relative pl-10">
+            <div className="absolute -left-[11px] top-2 w-5 h-5 rounded-full bg-purple-500 shadow-[0_0_25px_#a855f7]" />
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <h3 className="text-2xl font-bold">
+                    BlueCross BlueShield
+                  </h3>
+
+                  <p className="text-purple-400 mt-2">
+                    Data Scientist
+                  </p>
+                </div>
+
+                <span className="text-sm text-zinc-400">
+                  2023 - Present
+                </span>
+              </div>
+
+              <p className="mt-6 text-zinc-400 leading-8">
+                Leading cloud-native analytics and machine learning initiatives,
+                building scalable healthcare data pipelines, reconciliation
+                systems, and intelligent reporting solutions.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  Machine Learning
+                </span>
+
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  AWS Glue
+                </span>
+
+                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-zinc-300">
+                  Healthcare Analytics
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </Reveal>
+
+      {/* Certifications & Achievements */}
+      <Reveal>
+      <section
+        id="certifications"
+        className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+      >
+        <div className="mb-16">
+          <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
+            Certifications & Achievements
+          </p>
+
+          <h2 className="text-4xl md:text-6xl font-bold">
+            Continuous <span className="text-purple-500">Learning</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+          {/* Card 1 */}
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-2">
+            <div className="text-5xl">☁️</div>
+
+            <h3 className="mt-6 text-2xl font-bold">
+              AWS Cloud
+            </h3>
+
+            <p className="mt-4 text-zinc-400 leading-7 text-sm">
+              Expertise in building scalable cloud-native analytics
+              and ETL solutions using AWS services.
+            </p>
+
+            <div className="mt-6">
+              <span className="rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+                Cloud Engineering
+              </span>
+            </div>
+          </div>
+
+          {/* Card 2 */}
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-2">
+            <div className="text-5xl">🧠</div>
+
+            <h3 className="mt-6 text-2xl font-bold">
+              Machine Learning
+            </h3>
+
+            <p className="mt-4 text-zinc-400 leading-7 text-sm">
+              Applied ML concepts for predictive analytics,
+              intelligent automation, and data-driven insights.
+            </p>
+
+            <div className="mt-6">
+              <span className="rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+                AI / ML
+              </span>
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-2">
+            <div className="text-5xl">📊</div>
+
+            <h3 className="mt-6 text-2xl font-bold">
+              Data Engineering
+            </h3>
+
+            <p className="mt-4 text-zinc-400 leading-7 text-sm">
+              Built scalable big data pipelines using PySpark,
+              Kafka, AWS Glue, Athena, and Iceberg.
+            </p>
+
+            <div className="mt-6">
+              <span className="rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+                Big Data
+              </span>
+            </div>
+          </div>
+
+          {/* Card 4 */}
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-2">
+            <div className="text-5xl">🎓</div>
+
+            <h3 className="mt-6 text-2xl font-bold">
+              Master’s in AI
+            </h3>
+
+            <p className="mt-4 text-zinc-400 leading-7 text-sm">
+              Executive Master’s in Artificial Intelligence
+              focused on applied AI, ethics, and real-world systems.
+            </p>
+
+            <div className="mt-6">
+              <span className="rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+                University of the Cumberlands
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+      </Reveal>
+
+      {/* Contact Section */}
+      <Reveal>
+        <section
+          id="contact"
+          className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+        >
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-14 text-center">
+
+            <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
+              Let&apos;s Connect
+            </p>
+
+            <h2 className="text-4xl md:text-6xl font-bold leading-tight">
+              Ready to build something <br />
+              <span className="text-purple-500">
+                data-driven?
+              </span>
+            </h2>
+
+            <p className="mt-6 max-w-2xl mx-auto text-zinc-400 leading-8">
+              I&apos;m open to data science, machine learning,
+              cloud analytics, and data engineering opportunities.
+            </p>
+
+            {/* Buttons */}
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <a
+                href="mailto:kranthivanukuru@gmail.com"
+                className="bg-purple-600 hover:bg-purple-500 transition-all duration-300 px-7 py-3 rounded-xl font-medium shadow-[0_0_30px_rgba(168,85,247,0.35)]"
+              >
+                Email Me
+              </a>
+
+              <a
+                href="#"
+                className="border border-purple-500/50 hover:border-purple-400 transition-all duration-300 px-7 py-3 rounded-xl text-purple-300 font-medium"
+              >
+                LinkedIn
+              </a>
+
+              <a
+                href="#"
+                className="border border-purple-500/50 hover:border-purple-400 transition-all duration-300 px-7 py-3 rounded-xl text-purple-300 font-medium"
+              >
+                GitHub
+              </a>
+            </div>
+
+            {/* Social Icons */}
+            <div className="mt-10 flex justify-center gap-8 text-3xl">
+              <a
+                href="#"
+                className="text-zinc-400 hover:text-purple-400 transition-all duration-300 hover:scale-110"
+              >
+                <FaGithub />
+              </a>
+
+              <a
+                href="#"
+                className="text-zinc-400 hover:text-purple-400 transition-all duration-300 hover:scale-110"
+              >
+                <FaLinkedin />
+              </a>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <footer className="py-10 text-center text-sm text-zinc-500">
+            © 2026 Kranthi Vanukuru. Built with Next.js,
+            Tailwind CSS, and passion.
+          </footer>
+        </section>
+      </Reveal>
     </main>
   );
 }
