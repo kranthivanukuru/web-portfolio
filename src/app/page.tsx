@@ -92,6 +92,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#050816] text-white overflow-hidden">
       {loading && <Loader />}
       <div className="particle-bg" />
+      <div className="noise" />
 
       <div
         className="pointer-events-none fixed z-50 hidden h-8 w-8 rounded-full border border-purple-400/40 bg-purple-500/10 blur-sm md:block"
@@ -101,7 +102,7 @@ export default function Home() {
         }}
       /> 
       <nav className="fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-[#050816]/80 backdrop-blur-xl">
-        <div className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 py-5 flex items-center justify-between">
+        <div className="max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 py-5 flex items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-bold tracking-wide">
             KV<span className="text-purple-500">.</span>
           </h1>
@@ -138,8 +139,11 @@ export default function Home() {
           </button>
         </div>
 
-        {isOpen && (
-          <div className="md:hidden border-t border-white/10 bg-[#050816]/95 backdrop-blur-xl px-6 py-6">
+        <div
+          className={`md:hidden overflow-hidden border-t border-white/10 bg-[#050816]/95 backdrop-blur-xl transition-all duration-500 ${
+            isOpen ? "max-h-[500px] px-6 py-6 opacity-100" : "max-h-0 px-6 py-0 opacity-0"
+          }`}
+        >
             <div className="flex flex-col gap-5 text-zinc-300">
               <a onClick={() => setIsOpen(false)} href="#home">Home</a>
               <a onClick={() => setIsOpen(false)} href="#about">About</a>
@@ -157,10 +161,9 @@ export default function Home() {
               </a>
             </div>
           </div>
-        )}
       </nav>
 
-      <section id="home" className="relative w-full max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 pt-40 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[90vh]">
+      <section id="home" className="section-divider relative w-full max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 pt-40 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[90vh]">
         <div className="z-10 text-center lg:text-left">
           <p className="text-purple-400 text-lg md:text-xl mb-4">
             Hello, I&apos;m
@@ -216,7 +219,7 @@ export default function Home() {
         <div className="relative flex justify-center lg:justify-start">
           <div className="absolute inset-0 m-auto w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-purple-600/30 blur-3xl rounded-full" />
 
-          <div className="absolute top-8 right-4 sm:right-10 md:right-16 lg:right-0 z-20 hidden sm:block rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-xl">
+          <div className="float-soft-delay absolute top-8 right-4 sm:right-10 md:right-16 lg:right-0 z-20 hidden sm:block rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-xl">
             <p className="text-sm text-zinc-300">Model Performance</p>
             <p className="mt-3 text-3xl font-bold text-purple-400">
               AUC 0.92
@@ -226,7 +229,7 @@ export default function Home() {
           <img
             src="/profile.png"
             alt="Profile"
-            className="relative z-10 w-[280px] sm:w-[360px] md:w-[460px] lg:w-[560px] xl:w-[650px] 2xl:w-[850px] object-contain drop-shadow-[0_0_70px_rgba(168,85,247,0.55)]"
+            className="float-soft relative z-10 w-[280px] sm:w-[360px] md:w-[460px] lg:w-[560px] xl:w-[650px] 2xl:w-[850px] object-contain drop-shadow-[0_0_70px_rgba(168,85,247,0.55)]"
           />
         </div>
       </section>
@@ -236,8 +239,8 @@ export default function Home() {
         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-purple-500 to-transparent animate-pulse" />
       </div>
 
-      <Reveal>
-      <section id="about" className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28 grid grid-cols-1 lg:grid-cols-2 gap-28 items-center">
+      <Reveal delay={0.1}>
+      <section id="about" className="section-divider max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28 grid grid-cols-1 lg:grid-cols-2 gap-28 items-center">
         <div>
           <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
             About Me
@@ -302,10 +305,10 @@ export default function Home() {
       </Reveal>
 
       {/* Tech Stack Section */}
-      <Reveal>
+      <Reveal delay={0.2}>
       <section
         id="skills"
-        className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+        className="section-divider max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
       >
         <div className="mb-14">
           <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
@@ -320,7 +323,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
           {/* Languages */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-purple-500/40 transition-all duration-300">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300">
             <h3 className="text-xl font-semibold mb-6">
               Languages
             </h3>
@@ -344,7 +347,7 @@ export default function Home() {
           </div>
 
           {/* Data Science */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-purple-500/40 transition-all duration-300">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300">
             <h3 className="text-xl font-semibold mb-6">
               Data Science / ML
             </h3>
@@ -383,7 +386,7 @@ export default function Home() {
           </div>
 
           {/* Data Engineering */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-purple-500/40 transition-all duration-300">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300">
             <h3 className="text-xl font-semibold mb-6">
               Data Engineering
             </h3>
@@ -422,7 +425,7 @@ export default function Home() {
           </div>
 
           {/* AWS */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-purple-500/40 transition-all duration-300">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300">
             <h3 className="text-xl font-semibold mb-6">
               AWS / Cloud
             </h3>
@@ -461,7 +464,7 @@ export default function Home() {
           </div>
 
           {/* Visualization */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-purple-500/40 transition-all duration-300">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300">
             <h3 className="text-xl font-semibold mb-6">
               Visualization / BI
             </h3>
@@ -503,10 +506,10 @@ export default function Home() {
       </Reveal>
 
       {/* Featured Projects Section */}
-      <Reveal>
+      <Reveal delay={0.3}>
         <section
           id="projects"
-          className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+          className="section-divider max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
         >
           <div className="flex items-end justify-between mb-14">
             <div>
@@ -597,10 +600,10 @@ export default function Home() {
       </Reveal>
 
       {/* Experience Timeline */}
-      <Reveal>
+      <Reveal delay={0.4}>
       <section
         id="experience"
-        className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+        className="section-divider max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
       >
         <div className="mb-16">
           <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
@@ -618,7 +621,7 @@ export default function Home() {
           <div className="relative pl-10">
             <div className="absolute -left-[11px] top-2 w-5 h-5 rounded-full bg-purple-500 shadow-[0_0_25px_#a855f7]" />
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                   <h3 className="text-2xl font-bold">
@@ -661,7 +664,7 @@ export default function Home() {
           <div className="relative pl-10">
             <div className="absolute -left-[11px] top-2 w-5 h-5 rounded-full bg-purple-500 shadow-[0_0_25px_#a855f7]" />
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                   <h3 className="text-2xl font-bold">
@@ -704,7 +707,7 @@ export default function Home() {
           <div className="relative pl-10">
             <div className="absolute -left-[11px] top-2 w-5 h-5 rounded-full bg-purple-500 shadow-[0_0_25px_#a855f7]" />
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                   <h3 className="text-2xl font-bold">
@@ -747,10 +750,10 @@ export default function Home() {
       </Reveal>
 
       {/* Certifications & Achievements */}
-      <Reveal>
+      <Reveal delay={0.5}>
       <section
         id="certifications"
-        className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+        className="section-divider max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
       >
         <div className="mb-16">
           <p className="text-purple-400 text-sm uppercase tracking-widest mb-4">
@@ -765,7 +768,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
           {/* Card 1 */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-2">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300 hover:-translate-y-2">
             <div className="text-5xl">☁️</div>
 
             <h3 className="mt-6 text-2xl font-bold">
@@ -785,7 +788,7 @@ export default function Home() {
           </div>
 
           {/* Card 2 */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-2">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300 hover:-translate-y-2">
             <div className="text-5xl">🧠</div>
 
             <h3 className="mt-6 text-2xl font-bold">
@@ -805,7 +808,7 @@ export default function Home() {
           </div>
 
           {/* Card 3 */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-2">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300 hover:-translate-y-2">
             <div className="text-5xl">📊</div>
 
             <h3 className="mt-6 text-2xl font-bold">
@@ -825,7 +828,7 @@ export default function Home() {
           </div>
 
           {/* Card 4 */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-2">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:shadow-[0_0_40px_rgba(168,85,247,0.18)] transition-all duration-300 hover:-translate-y-2">
             <div className="text-5xl">🎓</div>
 
             <h3 className="mt-6 text-2xl font-bold">
@@ -848,10 +851,10 @@ export default function Home() {
       </Reveal>
 
       {/* Contact Section */}
-      <Reveal>
+      <Reveal delay={0.6}>
         <section
           id="contact"
-          className="max-w-[2200px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
+          className="max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32 py-28"
         >
           <div className="rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-14 text-center">
 

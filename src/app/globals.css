@@ -77,3 +77,63 @@ body {
     transform: translateY(-60px) scale(1.15);
   }
 }
+
+.section-divider {
+  position: relative;
+}
+
+.section-divider::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -80px;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 260px;
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.35) 0%,
+    rgba(124, 58, 237, 0.18) 35%,
+    transparent 75%
+  );
+  filter: blur(45px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 1px, transparent 1px),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 1px, transparent 1px),
+    radial-gradient(circle at 40% 60%, rgba(255,255,255,0.06) 1px, transparent 1px);
+
+  background-size: 180px 180px;
+  mix-blend-mode: soft-light;
+}
+
+@keyframes floatSoft {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float-soft {
+  animation: floatSoft 5s ease-in-out infinite;
+}
+
+.float-soft-delay {
+  animation: floatSoft 6s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
